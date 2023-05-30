@@ -5,11 +5,13 @@ import * as dotenv from 'dotenv';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  //dotenv.config();
+  dotenv.config();
   // Registrar el middleware de autenticación
-  //app.use();
+  app.use(new AuthMiddleware().use);
 
-  await app.listen(3000);
+  await app.listen(3000, () =>{
+    console.log("Server running in port 3000")
+  });
 }
 bootstrap();
 

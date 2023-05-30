@@ -1,4 +1,4 @@
-import { Controller, Post, Get, Body } from '@nestjs/common';
+import { Controller, Post, Body } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
 import { UnauthorizedException } from '@nestjs/common';
@@ -7,7 +7,7 @@ import { UnauthorizedException } from '@nestjs/common';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  /* @Post('login')
+  @Post('login')
   async login(@Body() loginDto: LoginDto) {
     const user = await this.authService.validateUser(loginDto.username, loginDto.password);
     if (!user) {
@@ -19,7 +19,7 @@ export class AuthController {
       token, // Devolver el token en la respuesta
       userName, // Opcional: Puedes devolver los datos del usuario si lo deseas
     };
-  } */
+  }
 
   /* async login(@Body() body: any) {
     // Implementa la lógica de inicio de sesión utilizando el servicio de autenticación
@@ -27,16 +27,10 @@ export class AuthController {
     return this.authService.login(username, password);
   } */
 
-  /* @Post('register')
+  @Post('register')
   async register(@Body() body: any) {
     // Implementa la lógica de registro utilizando el servicio de autenticación
     const { username, password } = body;
     return this.authService.register(username, password);
-  } */
-
-  @Get('getTask')
-  async getTask(@Body() body: any) {
-    const { id } = body;
-    return this.authService.getTask(id);
   }
 }
