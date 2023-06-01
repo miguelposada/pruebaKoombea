@@ -1,7 +1,6 @@
 import { Controller, Post, Body } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
-import { UnauthorizedException } from '@nestjs/common';
 
 @Controller('auth')
 export class AuthController {
@@ -9,28 +8,17 @@ export class AuthController {
 
   @Post('login')
   async login(@Body() loginDto: LoginDto) {
-    const user = await this.authService.validateUser(loginDto.username, loginDto.password);
-    if (!user) {
-      throw new UnauthorizedException('Credenciales inválidas');
-    }
-    const userName = user.username;
-    const token = await this.authService.generateToken(user); // Generar el token JWT
+    const user = await this.authService.validateCredentials(loginDto.username, loginDto.password);
+    const token = await this.authService.login(user); 
     return {
-      token, // Devolver el token en la respuesta
-      userName, // Opcional: Puedes devolver los datos del usuario si lo deseas
+      token 
     };
   }
 
-  /* async login(@Body() body: any) {
-    // Implementa la lógica de inicio de sesión utilizando el servicio de autenticación
-    const { username, password } = body;
-    return this.authService.login(username, password);
-  } */
-
   @Post('register')
   async register(@Body() body: any) {
-    // Implementa la lógica de registro utilizando el servicio de autenticación
     const { username, password } = body;
-    return this.authService.register(username, password);
+    const saveState = await this.authService.validateUserName(username);
+    return saveState.success ? this.authService.register(username, password): saveState;
   }
 }
