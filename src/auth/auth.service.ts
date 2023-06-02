@@ -19,8 +19,8 @@ export class AuthService {
     return this.validatePassword(password, user)
   }
 
-  async login(User: User) {
-    return await this.generateToken(User);
+  async login(username) {
+    return await this.generateToken(username);
   }
 
   async register(username: string, password: string) {
@@ -31,8 +31,8 @@ export class AuthService {
     return { success: true, message: 'Registro exitoso' };
   }
 
-  async generateToken(user: User) {
-    const payload = { username: user.username };
+  async generateToken(username) {
+    const payload = { username: username };
     const token = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '1h' });
     return token;
   }
