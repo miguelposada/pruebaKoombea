@@ -2,7 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 
 @Schema({ collection: 'FriendPairs' })
-export class FriendPair extends Document {
+export class FriendPairModel extends Document {
   @Prop({ type: Types.ObjectId, ref: 'User', required: true })
   user: Types.ObjectId;
 
@@ -13,4 +13,4 @@ export class FriendPair extends Document {
   friend: Types.ObjectId;
 }
 
-export const FriendPairSchema = SchemaFactory.createForClass(FriendPair);
+export const FriendPairSchema = SchemaFactory.createForClass(FriendPairModel);

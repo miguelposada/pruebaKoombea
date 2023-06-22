@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { User } from './user.model';
+import { UserModel } from './user.model';
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
 import { UnauthorizedException } from '@nestjs/common';
@@ -9,9 +9,9 @@ import { UnauthorizedException } from '@nestjs/common';
 @Injectable()
 export class AuthService {
 
-  constructor(@InjectModel('User') private readonly userModel: Model<User>) { }
+  constructor(@InjectModel('User') private readonly userModel: Model<UserModel>) { }
 
-  async validateCredentials(username: string, password: string): Promise<User | null> {
+  async validateCredentials(username: string, password: string): Promise<UserModel | null> {
     const user = await this.userModel.findOne({ username });
     if (!user) {
       throw new UnauthorizedException('User does not exists');
@@ -37,7 +37,7 @@ export class AuthService {
     return token;
   }
 
-  async validatePassword(password: String, user: User){
+  async validatePassword(password: String, user: UserModel){
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (isPasswordValid) {
       return user;

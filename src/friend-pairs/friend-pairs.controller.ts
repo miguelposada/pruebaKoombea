@@ -15,17 +15,19 @@ export class FriendPairsController {
     
     try {
       // Lógica para crear la amistad utilizando el servicio FriendPairsService
-      const result = await this.friendPairsService.createFriendPair(loggedUserId);
-      console.log("result:",result);
       
-      if(result){
-       return this.errorHandlerService.throwError(`No se pudo calcular: ${result}`);
-      }
-      return {
+      const UserAssignResult = await this.friendPairsService.createFriendPair(loggedUserId);
+      
+      if(UserAssignResult instanceof Error){
+       return this.errorHandlerService.throwError(`${UserAssignResult}`);
+      }else{
+       return {
         success: true,
         message: `amigo secreto creado para el usuario ${loggedUserId}`,
-        data: result,
-      };
+        data: UserAssignResult,
+      }; 
+      }
+      
     } catch (error) {
       
       //const statusCode = error?.response?.status || 500;

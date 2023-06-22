@@ -2,14 +2,14 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { AuthService } from './auth.service';
 import { getModelToken } from '@nestjs/mongoose';
 import { Model, Query } from 'mongoose';
-import { User } from './user.model';
+import { UserModel } from './user.model';
 import { UnauthorizedException } from '@nestjs/common';
 import * as jwt from 'jsonwebtoken';
 import * as bcrypt from 'bcrypt';
 
 describe('AuthService', () => {
   let authService: AuthService;
-  let userModel: Model<User>;
+  let userModel: Model<UserModel>;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -26,7 +26,7 @@ describe('AuthService', () => {
     }).compile();
 
     authService = module.get<AuthService>(AuthService);
-    userModel = module.get<Model<User>>(getModelToken('User'));
+    userModel = module.get<Model<UserModel>>(getModelToken('User'));
   });
 
   // Aquí puedes escribir tus pruebas unitarias
@@ -41,15 +41,15 @@ describe('AuthService', () => {
     });
 
     it('should call validatePassword and return user if user exists', async () => {
-      const mockUser: Partial<User> = {
+      const mockUser: Partial<UserModel> = {
         username: 'username',
         password: 'hashedPassword',
       };
       (userModel.findOne as jest.Mock).mockReturnValueOnce(
-        (mockUser as unknown) as Query<unknown, unknown, {}, User, 'findOne'>,
+        (mockUser as unknown) as Query<unknown, unknown, {}, UserModel, 'findOne'>,
       );
       jest.spyOn(authService, 'validatePassword').mockResolvedValueOnce(
-        (mockUser as unknown) as User,
+        (mockUser as unknown) as UserModel,
       );
 
       const result = await authService.validateCredentials(
@@ -59,7 +59,7 @@ describe('AuthService', () => {
 
       expect(userModel.findOne).toBeCalledWith({ username: 'username' });
       expect(authService.validatePassword).toBeCalledWith('password', mockUser);
-      expect(result).toEqual(mockUser as User);
+      expect(result).toEqual(mockUser as UserModel);
     });
   });
 
@@ -93,11 +93,11 @@ describe('AuthService', () => {
     });
 
     it('should return failure when username is already assigned', async () => {
-      const existingUser: Partial<User> = {
+      const existingUser: Partial<UserModel> = {
         username: 'existingUsername',
       };
       (userModel.findOne as jest.Mock).mockReturnValueOnce(
-        (existingUser as unknown) as Query<unknown, unknown, {}, User, 'findOne'>,
+        (existingUser as unknown) as Query<unknown, unknown, {}, UserModel, 'findOne'>,
       );
 
       const result = await authService.validateUserName('existingUsername');

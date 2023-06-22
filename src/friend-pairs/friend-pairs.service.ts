@@ -1,8 +1,8 @@
 // friend-pair.service.ts
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { FriendPair } from './friend-pairs.model';
+import { FriendPairModel } from './friend-pairs.model';
 import { UserSelectionService } from './user-selection.service';
 import { ErrorHandlerService } from '../error-handler/error-handler.service';
 
@@ -10,28 +10,29 @@ import { ErrorHandlerService } from '../error-handler/error-handler.service';
 export class FriendPairService {
 
   constructor(
-    @InjectModel('FriendPair') private readonly friendPairModel: Model<FriendPair>,
+    @InjectModel('FriendPair') private readonly friendPairModel: Model<FriendPairModel>,
     private readonly userSelectionService: UserSelectionService,
     private readonly errorHandlerService: ErrorHandlerService,
   ) { }
 
-  async createFriendPair(loggedUserId: string): Promise<string> {
+  async createFriendPair(loggedUserId: string): Promise<String> {
     try {
-      const randomUserId = await this.userSelectionService.selectRandomUser(loggedUserId);
-      console.log(randomUserId);
+      const randomUserIdResult = await this.userSelectionService.selectRandomUser(loggedUserId);
       
-      if (randomUserId) {
-        return(`Error: ${randomUserId}`)
-       // this.errorHandlerService.throwError('Ya tienes asignado un amigo secreto. No puedes jugar nuevamente.');
+      if (randomUserIdResult instanceof Error) {
+        return this.errorHandlerService.throwError(` ${randomUserIdResult}`);
+      }else{
+        const friendPair = new this.friendPairModel({
+          user: randomUserIdResult.username,
+          loggedUserId: loggedUserId,
+          friend: randomUserIdResult._id,
+        });
+  
+        const saveStatus = await friendPair.save();
+        if(saveStatus && saveStatus instanceof this.friendPairModel){
+          return randomUserIdResult.username;
+        }
       }
-      const friendPair = new this.friendPairModel({
-        user: randomUserId,
-        loggedUserId: loggedUserId,
-        friend: randomUserId,
-      });
-
-      let saveStatus = await friendPair.save();
-      return 'Par de amigos creado exitosamente' + saveStatus;
     } catch (error) {
       return error
     }
