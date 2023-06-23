@@ -1,3 +1,37 @@
+## Description para prueba Koombea
+ - el repositorio es https://github.com/miguelposada/pruebaKoombea.git la rama es development
+ - se hizo uso del framework NestJS, base de datos MongoDB y el ORM Mongoose.
+ - se implemento un Middleware que da proteccion a las rutas.
+ - se definio una coleccion en mongoDB llamada WebScrapingData para almacenar la informacion asi:
+   ![Alt text](image-5.png)
+ - el servicio de registro se hizo mediante username y password en el cuerpo de la peticion(valida usuarios existentes)
+   ![Alt text](image-1.png)
+ - el servicio de logueo se implemento recibiendo un JWT y username y password en el cuerpo
+   ![Alt text](image-3.png)
+
+  ## se definieron tres servicios para dar cumplimiento a los requerimientos de Scrape
+ - para usar el servicio de scrape y los demas servicio es necesario usar autenticacion Bearer token en postman  
+   ![Alt text](image-6.png)
+ - este es el resultado despues de usarlo con el token
+   ![Alt text](image-4.png)
+ - un servicio de Listar con cantidad total
+   ![Alt text](image-7.png)
+ - un servicio de listar links por dominio
+   ![Alt text](image-8.png)
+
+   ## Installation for Koombea test
+
+```bash
+$ npm install
+```
+## Nota: no olvidar tener instalado mongoDB y si se desea el MongoDB Compass
+## en el repositorio se adjunta la coleccion de postman para pruebas 
+`koombeatest.postman_collection`
+
+## algunas pruebas unitarias aun no estan corriendo exitosamente debido a la falta de tiempo pero si estan muy avanzadas
+
+
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
@@ -22,7 +56,6 @@
   <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-## Description
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
@@ -71,3 +104,6 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](LICENSE).
+
+# para probar desde postman se adjunta en el repositorio el archivo para importar en postman
+$ npm run test:e2e

@@ -1,0 +1,178 @@
+{
+	"info": {
+		"_postman_id": "b255a796-9ac6-47e2-be6c-ab382ef8ddb8",
+		"name": "koombeatest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "6254581",
+		"_collection_link": "https://planetary-capsule-573412.postman.co/workspace/My-Workspace~8fc04e7b-9b84-4614-8ddf-5f409a03fdff/collection/6254581-b255a796-9ac6-47e2-be6c-ab382ef8ddb8?action=share&creator=6254581&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"userkoombea\",\r\n  \"password\": \"passmwordkoombea\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "register",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1pZ3VlbDciLCJpYXQiOjE2ODc0NjI2NTIsImV4cCI6MTY4NzQ2NjI1Mn0.vnZJqRiniUA-flBrm1ybp9_Lmwr0-ETnopH-rrOLhLw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"userkoombea\",\r\n  \"password\": \"passmwordkoombea\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/auth/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "scrape",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXJrb29tYmVhIiwiaWF0IjoxNjg3NTM0MjIxLCJleHAiOjE2ODc1Mzc4MjF9.DCEBL561YZWpOYN7CUwp1QgTDk06JmCCF2VUi8TjYFs",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"url\": \"https://www.gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/web-scraping/scrape",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"web-scraping",
+						"scrape"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "pagelist",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXJrb29tYmVhIiwiaWF0IjoxNjg3NTM0MjIxLCJleHAiOjE2ODc1Mzc4MjF9.DCEBL561YZWpOYN7CUwp1QgTDk06JmCCF2VUi8TjYFs",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/web-scraping/pagelist",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"web-scraping",
+						"pagelist"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "pagesListByDomainName",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXJrb29tYmVhIiwiaWF0IjoxNjg3NTMwNTU1LCJleHAiOjE2ODc1MzQxNTV9.HmZW1UktfKOjPk0rUYGPlokrjNEtZetYq03DjCGlWao",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/web-scraping/google",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"web-scraping",
+						"google"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

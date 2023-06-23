@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { WebScrapingModel } from './web-scraping.model';
-import { ErrorHandlerService } from 'src/error-handler/error-handler.service';
+import { ErrorHandlerService } from '../error-handler/error-handler.service';
 import * as cheerio from 'cheerio';
 import axios from 'axios';
 
@@ -24,7 +24,7 @@ export class WebScrapingService {
             return pageData.links.map((link) => ({ href: link.href, body: link.body }));
         } catch (error) {
             console.error('Error retrieving page links:', error);
-            throw new Error('Failed to retrieve page links.');
+            throw new Error(`Failed to retrieve page links.${error}`);
         }
     }
 
@@ -59,19 +59,7 @@ export class WebScrapingService {
         }
     }
 
-    private async saveLinks(links: { href: string, body: string }[], name: string): Promise<string> {
-        try {
-            const totalLinks = links.length
-            console.log(`${totalLinks} links saved to the database.`);
-            const savedSrapedList = await this.webScrapingModel.create({ name, totalLinks, links });
-            return `domain '${name}' added to db with ${totalLinks} links scraped`;
-        } catch (error) {
-            console.error('Error saving links to the database:', error);
-            return this.errorHandlerService.throwError(`${error}`);
-        }
-    }
-
-    private async fetchPage(url: string): Promise<string> {
+    async fetchPage(url: string): Promise<string> {
         try {
             const response = await axios.get(url);
             return response.data;
@@ -94,6 +82,18 @@ export class WebScrapingService {
             }
         }
         return this.errorHandlerService.throwError(`Exception extracting the Url Domain from ${url}`);
+    }
+
+    private async saveLinks(links: { href: string, body: string }[], name: string): Promise<string> {
+        try {
+            const totalLinks = links.length
+            console.log(`domain '${name}' and ${totalLinks} links saved to the database.`);
+            const savedSrapedList = await this.webScrapingModel.create({ name, totalLinks, links });
+            return `domain '${name}' added to db with ${totalLinks} links scraped`;
+        } catch (error) {
+            console.error('Error saving links to the database:', error);
+            return this.errorHandlerService.throwError(`${error}`);
+        }
     }
 
 }
