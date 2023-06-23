@@ -3,7 +3,8 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { WebScrapingController } from './web-scraping.controller';
 import { WebScrapingService } from './web-scraping.service';
 import { WebScrapingModel, WebScrapingSchema } from './web-scraping.model';
-import { PageListService } from './page-list/page-list.service';
+import { ErrorHandlerService } from 'src/error-handler/error-handler.service';
+
 
 
 @Module({
@@ -13,6 +14,6 @@ import { PageListService } from './page-list/page-list.service';
     ]),
   ],
   controllers: [WebScrapingController],
-  providers: [WebScrapingService, PageListService],
+  providers: [WebScrapingService, ErrorHandlerService],
 })
-export class WebScrapingModule {}
+export class WebScrapingModule { }

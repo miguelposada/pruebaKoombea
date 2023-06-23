@@ -3,8 +3,6 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './auth/auth.module';
 import { ErrorHandlerModule } from './error-handler/error-handler.module';
 import { WebScrapingModule } from './web-scraping/web-scraping.module';
-import { PageListService } from './web-scraping/page-list/page-list.service';
-import { PageListModule } from './web-scraping/page-list/page-list.module'
 
 @Module({
   imports: [
@@ -12,8 +10,6 @@ import { PageListModule } from './web-scraping/page-list/page-list.module'
     AuthModule,
     ErrorHandlerModule,
     WebScrapingModule,
-    PageListModule,
   ],
-  providers: [PageListService],
 })
-export class AppModule {}
+export class AppModule { }
