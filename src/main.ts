@@ -10,7 +10,7 @@ async function bootstrap() {
   app.use(new AuthMiddleware().use);
 
   await app.listen(3000, () =>{
-    console.log("Server running in port 3000")
+    console.log("Server running on port 3000")
   });
 }
 bootstrap();
