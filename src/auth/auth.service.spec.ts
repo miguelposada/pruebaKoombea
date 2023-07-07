@@ -71,14 +71,14 @@ describe('AuthService', () => {
       const hashedPassword = 'hashedPassword';
       
       const saveMock = jest.fn().mockResolvedValueOnce(undefined);
-      const userModelMock = { save: saveMock };
+      const userModelMock = { create: saveMock };
   
       jest.spyOn(userModel, 'findOne').mockReturnThis();
       jest.spyOn(bcrypt, 'hash').mockResolvedValueOnce(hashedPassword);
   
       const result = await authService.register(username, password);
   
-      expect(userModelMock.save).toBeCalled();
+      expect(userModel.create).toBeCalled();
       expect(result).toEqual({ success: true, message: 'Registro exitoso' });
     });
   });  

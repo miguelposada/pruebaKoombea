@@ -24,11 +24,15 @@ export class AuthService {
   }
 
   async register(username: string, password: string) {
-    const saltRounds = 10;
-    const hashedPassword = await bcrypt.hash(password, saltRounds);
-    const user = new this.userModel({ username, password: hashedPassword });
-    await user.save();
-    return { success: true, message: 'Registro exitoso' };
+    try {
+      const saltRounds = 10;
+      const hashedPassword = await bcrypt.hash(password, saltRounds);
+      await this.userModel.create({ username, password: hashedPassword });
+      return { success: true, message: 'Registro exitoso' };
+    } catch (error) {
+      return error
+    }
+
   }
 
   async generateToken(username) {
@@ -37,20 +41,20 @@ export class AuthService {
     return token;
   }
 
-  async validatePassword(password: String, user: UserModel){
+  async validatePassword(password: String, user: UserModel) {
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (isPasswordValid) {
       return user;
-    }else{
+    } else {
       throw new UnauthorizedException('Wrong User Credentials');
     }
   }
 
-  async validateUserName(username: String){
+  async validateUserName(username: String) {
     const existingUser = await this.userModel.findOne({ username });
     if (existingUser) {
       return { success: false, message: 'username is already assigned' };
-    }else{
+    } else {
       return { success: true, message: 'username available to save' };
     }
   }

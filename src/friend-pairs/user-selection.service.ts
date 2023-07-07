@@ -31,6 +31,7 @@ export class UserSelectionService {
         return this.getEligibleUser(AllUsersAvailable);
       }
     } catch (exception) {
+      console.log(loggedUserId,exception);
       return exception;
     }
   }
@@ -41,6 +42,7 @@ export class UserSelectionService {
       return count > 0;
     } catch (error) {
       console.log(loggedUserId,error);
+      return error
     }
   }
 
@@ -53,6 +55,7 @@ export class UserSelectionService {
         throw new NotFoundException(`no hay mas usuarios disponibles. encontrados: ${availableList}`);
       }
     } catch (error) {
+      console.log(error);
       throw new Error(`Error seleccionando los usuarios disponibles: ${error}`);
     }
   }
@@ -64,6 +67,7 @@ export class UserSelectionService {
       }
       return this.getFriendRandomly(AllUsersAvailable);
     } catch (error) {
+      console.log(error);
       throw new Error(`Error ${error} calculando el usuario random`);
     }
   }
@@ -78,6 +82,7 @@ export class UserSelectionService {
       const randomUser = UsersForRandom[randomIndex];
       return randomUser; 
     } catch (error) {
+      console.log(error);
       throw new Error(`Error ${error} obteniendo usuario aleatoriamente.`);
     }
     
