@@ -1,7 +1,7 @@
 import { Injectable, NestMiddleware } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
 import * as jwt from 'jsonwebtoken';
-const excludedPaths = ['/auth/login']; // Rutas que deben excluirse del middleware
+const excludedPaths = ['/auth/login', '/auth/register']; // Rutas que deben excluirse del middleware
 
 @Injectable()
 export class AuthMiddleware implements NestMiddleware {
