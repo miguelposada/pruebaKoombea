@@ -23,7 +23,7 @@ export class FriendPairService {
         return this.saveUser(loggedUserId, randomUserIdResult)
       }
     } catch (error) {
-      return error
+      throw new Error(error)
     }
   }
 
@@ -39,7 +39,7 @@ export class FriendPairService {
         return randomUserIdResult.username;
       }
     } catch (error) {
-      return error
+      throw new Error(error);
     }
   }
 }

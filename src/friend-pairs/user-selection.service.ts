@@ -31,8 +31,7 @@ export class UserSelectionService {
         return this.getEligibleUser(AllUsersAvailable);
       }
     } catch (exception) {
-      console.log(loggedUserId,exception);
-      return exception;
+      throw new Error(exception);
     }
   }
 
