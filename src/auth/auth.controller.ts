@@ -8,17 +8,26 @@ export class AuthController {
 
   @Post('login')
   async login(@Body() loginDto: LoginDto) {
-    const user = await this.authService.validateCredentials(loginDto.username, loginDto.password);
-    const token = await this.authService.login(user.username); 
-    return {
-      token 
-    };
+    try {
+      const user = await this.authService.validateCredentials(
+        loginDto.username,
+        loginDto.password,
+      );
+      const token = await this.authService.login(user.username);
+      return {
+        token,
+      };
+    } catch (excep) {
+      return excep;
+    }
   }
 
   @Post('register')
   async register(@Body() body: any) {
     const { username, password } = body;
     const saveState = await this.authService.validateUserName(username);
-    return saveState.success ? this.authService.register(username, password): saveState;
+    return saveState.success
+      ? this.authService.register(username, password)
+      : saveState;
   }
 }
