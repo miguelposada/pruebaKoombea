@@ -13,9 +13,11 @@ export class AuthController {
         loginDto.username,
         loginDto.password,
       );
+      const userId = user._id;
       const token = await this.authService.login(user.username);
       return {
         token,
+        userId,
       };
     } catch (excep) {
       return excep;

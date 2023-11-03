@@ -8,6 +8,9 @@ export class UserModel extends Document {
 
   @Prop({ required: true })
   password: string;
+
+  @Prop()
+  _id: string; // Agrega una propiedad para _id
 }
 
 export const UserSchema = SchemaFactory.createForClass(UserModel);

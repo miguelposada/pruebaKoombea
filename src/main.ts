@@ -2,16 +2,23 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { AuthMiddleware } from './middlewares/auth.middleware';
 import * as dotenv from 'dotenv';
+import { ExpressAdapter } from '@nestjs/platform-express';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, new ExpressAdapter());
   dotenv.config();
+
+  // Configurar opciones CORS manualmente
+  app.enableCors({
+    origin: 'http://localhost:3001', // Reemplaza con el origen correcto de tu aplicación React
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+  });
   // Registrar el middleware de autenticación
   app.use(new AuthMiddleware().use);
 
-  await app.listen(3000, () =>{
-    console.log("Server running in port 3000")
+  await app.listen(3000, () => {
+    console.log('Server running in port 3000');
   });
 }
 bootstrap();
-

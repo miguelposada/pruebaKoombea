@@ -5,7 +5,6 @@ const excludedPaths = ['/auth/login', '/auth/register']; // Rutas que deben excl
 
 @Injectable()
 export class AuthMiddleware implements NestMiddleware {
-
   use(req: Request, res: Response, next: NextFunction) {
     const path = req.originalUrl;
     if (excludedPaths.includes(path)) {
@@ -25,7 +24,9 @@ export class AuthMiddleware implements NestMiddleware {
         res.status(401).json({ message: 'Token inválido' });
       }
     } else {
-      res.status(401).json({ message: 'No se proporcionó un token de autenticación' });
+      res
+        .status(401)
+        .json({ message: 'No se proporcionó un token de autenticación' });
     }
   }
 }

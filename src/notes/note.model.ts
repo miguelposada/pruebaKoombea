@@ -6,7 +6,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Module } from '@nestjs/common';
 
-@Schema()
+@Schema({ collection: 'notes' })
 export class Note extends Document {
   @Prop({ required: true })
   title: string;
@@ -19,18 +19,3 @@ export class Note extends Document {
 }
 
 export const NoteSchema = SchemaFactory.createForClass(Note);
-
-@Module({
-  imports: [
-    MongooseModule.forFeature([
-      {
-        name: 'Note',
-        schema: NoteSchema,
-        collection: 'notes', // Nombre de la colección en la base de datos 'Notes'
-      },
-    ]),
-  ],
-})
-export class NoteModule {
-  constructor(@InjectModel('Note') private readonly noteModel: Model<Note>) {}
-}

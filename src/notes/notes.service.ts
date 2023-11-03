@@ -8,7 +8,7 @@ import { UpdateNoteDto } from './Dto/update.note.dto';
 
 @Injectable()
 export class NotesService {
-  constructor(@InjectModel(Note.name) private noteModel: Model<Note>) {}
+  constructor(@InjectModel('Note') private noteModel: Model<Note>) {}
 
   async create(createNoteDto: CreateNoteDto): Promise<Note> {
     const createdNote = new this.noteModel(createNoteDto);
