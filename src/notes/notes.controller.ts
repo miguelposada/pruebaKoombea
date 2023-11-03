@@ -31,6 +31,11 @@ export class NotesController {
     return this.notesService.findOne(id);
   }
 
+  @Get('user/:userId/notes')
+  findAllByUserId(@Param('userId') userId: string) {
+    return this.notesService.findAllByUserId(userId);
+  }
+
   @Put(':id')
   update(@Param('id') id: string, @Body() updateNoteDto: UpdateNoteDto) {
     return this.notesService.update(id, updateNoteDto);

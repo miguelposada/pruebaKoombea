@@ -23,6 +23,10 @@ export class NotesService {
     return this.noteModel.findById(id).exec();
   }
 
+  async findAllByUserId(userId: string): Promise<Note[]> {
+    return this.noteModel.find({ userId }).exec();
+  }
+
   async update(id: string, updateNoteDto: UpdateNoteDto): Promise<Note> {
     return this.noteModel
       .findByIdAndUpdate(id, updateNoteDto, { new: true })
