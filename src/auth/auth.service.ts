@@ -8,15 +8,19 @@ import { UnauthorizedException } from '@nestjs/common';
 
 @Injectable()
 export class AuthService {
+  constructor(
+    @InjectModel('User') private readonly userModel: Model<UserModel>,
+  ) {}
 
-  constructor(@InjectModel('User') private readonly userModel: Model<UserModel>) { }
-
-  async validateCredentials(username: string, password: string): Promise<UserModel | null> {
+  async validateCredentials(
+    username: string,
+    password: string,
+  ): Promise<UserModel | null> {
     const user = await this.userModel.findOne({ username });
     if (!user) {
       throw new UnauthorizedException('User does not exists');
     }
-    return this.validatePassword(password, user)
+    return this.validatePassword(password, user);
   }
 
   async login(username) {
@@ -27,17 +31,21 @@ export class AuthService {
     try {
       const saltRounds = 10;
       const hashedPassword = await bcrypt.hash(password, saltRounds);
-      await this.userModel.create({ username, password: hashedPassword });
-      return { success: true, message: 'Registro exitoso' };
+      const registerResponse = await this.userModel.create({
+        username,
+        password: hashedPassword,
+      });
+      return { success: true, message: 'Succesfully Registered' };
     } catch (error) {
-      return error
+      return error;
     }
-
   }
 
   async generateToken(username) {
     const payload = { username: username };
-    const token = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '1h' });
+    const token = jwt.sign(payload, process.env.SECRET_KEY, {
+      expiresIn: '1h',
+    });
     return token;
   }
 

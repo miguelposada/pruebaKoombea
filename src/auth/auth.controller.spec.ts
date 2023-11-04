@@ -11,7 +11,7 @@ describe('AuthController', () => {
       providers: [
         {
           provide: AuthService,
-          useValue: {}, // Puedes usar un objeto vacío o crear un objeto de prueba
+          useValue: {},
         },
       ],
     }).compile();

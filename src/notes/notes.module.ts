@@ -15,7 +15,7 @@ import { MongooseModule } from '@nestjs/mongoose';
     ]),
     MongooseModule.forRoot('mongodb://127.0.0.1:27017/NotesDB'),
   ],
-  providers: [NotesService], // Asegúrate de que NotesService esté incluido aquí
+  providers: [NotesService],
   controllers: [NotesController],
 })
 export class NotesModule {}

@@ -8,13 +8,12 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule, new ExpressAdapter());
   dotenv.config();
 
-  // Configurar opciones CORS manualmente
   app.enableCors({
-    origin: 'http://localhost:3001', // Reemplaza con el origen correcto de tu aplicación React
+    origin: 'http://localhost:3001',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
   });
-  // Registrar el middleware de autenticación
+
   app.use(new AuthMiddleware().use);
 
   await app.listen(3000, () => {

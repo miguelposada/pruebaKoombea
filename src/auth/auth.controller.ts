@@ -25,11 +25,17 @@ export class AuthController {
   }
 
   @Post('register')
-  async register(@Body() body: any) {
+  async register(@Body() body: LoginDto) {
     const { username, password } = body;
     const saveState = await this.authService.validateUserName(username);
-    return saveState.success
-      ? this.authService.register(username, password)
-      : saveState;
+    if (saveState.success) {
+      const respRegisterService = await this.authService.register(
+        username,
+        password,
+      );
+      return respRegisterService;
+    } else {
+      return saveState;
+    }
   }
 }
